@@ -103,12 +103,12 @@ LL <- function(params){
   # prob[,1] <- pnorm(cutpoint1 - mu)
   # prob[,2] <- pnorm(cutpoint2 - mu) - prob[,1]
 
-  PR1 <- log(rowMeans(matrix(prob[,1], ncol = Ndraws)))
-  PR2 <- log(rowMeans(matrix(prob[,2], ncol = Ndraws)))
+  PR1 <- rowMeans(matrix(prob[,1], ncol = Ndraws))
+  PR2 <- rowMeans(matrix(prob[,2], ncol = Ndraws))
   PR3 <- 1-(PR1+PR2)
   
   # simulated loglikelihood for fractional split model
-  loglik <- sum(w[,1]*PR1+w[,2]*PR2+w[,3]*PR3)
+  loglik <- sum(w[,1]*log(PR1)+w[,2]*log(PR2)+w[,3]*log(PR3))
   
   return(loglik)
 }
